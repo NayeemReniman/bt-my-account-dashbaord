@@ -1,0 +1,35 @@
+input {
+  padding: 10px;
+  min-width: 313px;
+  border-radius: 3px;
+  border: 0px;
+}
+
+button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 1px solid white;
+  font-size: medium;
+}
+
+.row__flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.app_card {
+  background-color: #6400aa;
+  color: white;
+  text-align: center;
+  border-radius: 10px;
+  max-width: 30vw;
+  margin: 5px;
+}
+
+.form__element {
+  margin: 5px 0px;
+}
+
+
