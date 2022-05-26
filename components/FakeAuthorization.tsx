@@ -1,3 +1,10 @@
+import {
+  Align,
+  Button,
+  VerticalSpace,
+  Text,
+  TextInput,
+} from "@arc-ui/components";
 import React from "react";
 import { Dispatch, FormEvent, FunctionComponent, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
@@ -50,29 +57,23 @@ const FakeAuthorization: FunctionComponent<FakeAuthorizationProps> = () => {
   };
 
   return (
-    <div className="row__flex app_card">
+    <section>
       {isLoggedIn ? (
-        <div className="form__element">
-          <button type="button" onClick={(e) => setisLoggedIn(false)}>
-            Re Login
-          </button>
-        </div>
+        <section>
+          <Button label="Re Login" onClick={() => setisLoggedIn(false)} />
+        </section>
       ) : (
-        <form
-          className="fakeauhtoization__form"
-          onSubmit={(e) => handleSubmit(e)}
-        >
-          <div className="form__element">
-            <label className="form__label">Access Token</label>
-            <input
-              name="accessToken"
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <div>
+            <TextInput
+              id="accessToken"
+              label="Access Token"
               onChange={(e) => setaccessToken(e.target.value)}
               value={accessToken}
-              placeholder="accessToken"
             />
           </div>
-          <div className="form__element">
-            <label className="form__label">DeviceId</label>
+          <div>
+            <label>DeviceId</label>
             <input
               name="deviceID"
               onChange={(e) => setdeviceID(e.target.value)}
@@ -80,8 +81,8 @@ const FakeAuthorization: FunctionComponent<FakeAuthorizationProps> = () => {
               placeholder="deviceId"
             />
           </div>
-          <div className="form__element">
-            <label className="form__label">Master ContactID</label>
+          <div>
+            <label>Master ContactID</label>
             <input
               name="masterContactID"
               onChange={(e) => setmasterContactID(e.target.value)}
@@ -89,8 +90,8 @@ const FakeAuthorization: FunctionComponent<FakeAuthorizationProps> = () => {
               placeholder="masterContactID"
             />
           </div>
-          <div className="form__element">
-            <label className="form__label">User ID</label>
+          <div>
+            <label>User ID</label>
             <input
               name="userID"
               onChange={(e) => setuserID(e.target.value)}
@@ -98,8 +99,8 @@ const FakeAuthorization: FunctionComponent<FakeAuthorizationProps> = () => {
               placeholder="userID"
             />
           </div>
-          <div className="form__element">
-            <label className="form__label">ContactID</label>
+          <div>
+            <label>ContactID</label>
             <input
               name="contactID"
               onChange={(e) => setcontactID(e.target.value)}
@@ -107,12 +108,13 @@ const FakeAuthorization: FunctionComponent<FakeAuthorizationProps> = () => {
               placeholder="contactID"
             />
           </div>
-          <div className="form__element">
-            <button type="submit">submit</button>
-          </div>
+          <VerticalSpace />
+          <Align horizontal="center">
+            <Button label="submit" type="submit" />
+          </Align>
         </form>
       )}
-    </div>
+    </section>
   );
 };
 
