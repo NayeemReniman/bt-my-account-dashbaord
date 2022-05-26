@@ -1,7 +1,7 @@
 import React from "react";
 import { Dispatch, FormEvent, FunctionComponent, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { addAcessToken } from "../store/actionCreators";
+import { addAcessToken } from "../redux/actions/main";
 import { AccessToken, AppState } from "../types/type.auth";
 
 interface FakeAuthorizationProps {}

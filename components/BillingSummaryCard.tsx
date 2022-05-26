@@ -43,14 +43,12 @@ const BillingSummaryCard: FunctionComponent<BillingSummaryCardProps> = () => {
 
   return (
     <div>
-      <p className="name__heading">
-        {billingAccounts?.result.map((billingAccount) => (
-          <div>
-            <p>Billing Account: {billingAccount.AccountNumber}</p>
-            <p>Account name: {billingAccount.Name}</p>
-          </div>
-        ))}
-      </p>
+      {billingAccounts?.result.map((billingAccount) => (
+        <>
+          <p>Billing Account: {billingAccount.AccountNumber}</p>
+          <p>Account name: {billingAccount.Name}</p>
+        </>
+      ))}
     </div>
   );
 };

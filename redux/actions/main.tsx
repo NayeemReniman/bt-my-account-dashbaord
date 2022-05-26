@@ -2,8 +2,8 @@ import {
   AccessToken,
   AuthorizationAction,
   DispatchType,
-} from "../types/type.auth";
-import * as actionTypes from "./actionTypes";
+} from "../../types/type.auth";
+import * as actionTypes from "../types";
 
 export function addAcessToken(accessToken: AccessToken) {
   const action: AuthorizationAction = {
