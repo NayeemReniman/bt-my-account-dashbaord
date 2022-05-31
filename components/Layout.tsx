@@ -1,38 +1,17 @@
-import {
-  Align,
-  Clock,
-  Group,
-  Surface,
-  VerticalSpace,
-} from "@arc-ui/components";
-import { FunctionComponent } from "react";
-import BillingSummaryCard from "./BillingSummaryCard";
+import { VerticalSpace } from "@arc-ui/components";
+import React, { FunctionComponent } from "react";
 import ClientDetailsCard from "./ClientDetailsCard";
-import FakeAuthorization from "./FakeAuthorization";
+import FakeAuthorization from "./temp/FakeAuthorization";
 
 interface LayoutProps {}
 
 const Layout: FunctionComponent<LayoutProps> = () => {
   return (
-    <Surface background="lighter">
-      <Group grow growEqual>
-        <Group.Item>
-          <FakeAuthorization />
-        </Group.Item>
-        <Group.Item>
-          <Clock />
-        </Group.Item>
-      </Group>
+    <>
+      <ClientDetailsCard />
       <VerticalSpace />
-      <Group grow growEqual>
-        <Group.Item>
-          <ClientDetailsCard />
-        </Group.Item>
-        <Group.Item>
-          <BillingSummaryCard />
-        </Group.Item>
-      </Group>
-    </Surface>
+      <FakeAuthorization />
+    </>
   );
 };
 

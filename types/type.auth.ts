@@ -7,16 +7,7 @@ export type AccessToken = {
   isLoggedIn: boolean;
 };
 
-export type AppState = { auth: AccessToken; userDetails: { name: string } };
-
-export type AuthorizationAction = {
-  type: string;
-  payload: AccessToken;
-};
-
-export type DispatchType = (args: AuthorizationAction) => AuthorizationAction;
-
-export type bilingGroups = {
+export type UserGroups = {
   Name: string;
   RoleId: number;
   Key: string;
@@ -24,18 +15,18 @@ export type bilingGroups = {
   ContactId: string;
 };
 
-export type commonResponse = {
+export type CommonResponse = {
   isSuccess: boolean;
   code: number;
   errorMessage: string;
 };
-export type userDetails = commonResponse & {
+export type UserDetails = CommonResponse & {
   result: {
     Title: string;
     FirstName: string;
     LastName: string;
     LastLoggedIn: string;
-    Groups: bilingGroups[];
+    Groups: UserGroups[];
     Intercepts: [];
     MobileNumber: string;
     LandlineNumber: string;
@@ -48,7 +39,7 @@ export type userDetails = commonResponse & {
   };
 };
 
-export type billingAccount = {
+export type BillingAccount = {
   AccountNumber: string;
   Name: string;
   Roles: string;
@@ -56,6 +47,18 @@ export type billingAccount = {
   RoleToShow: string;
 };
 
-export type billingAccounts = commonResponse & {
-  result: billingAccount[];
+export type BillingAccounts = CommonResponse & {
+  result: BillingAccount[];
 };
+
+export type AppState = {
+  auth: AccessToken;
+  userDetails: UserDetails["result"];
+};
+
+export type AuthorizationAction = {
+  type: string;
+  payload: AccessToken;
+};
+
+export type DispatchType = (args: AuthorizationAction) => AuthorizationAction;

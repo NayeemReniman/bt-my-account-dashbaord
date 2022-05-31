@@ -1,6 +1,9 @@
+import { Heading, VerticalSpace, Text } from "@arc-ui/components";
 import { FunctionComponent, useEffect, useState } from "react";
 import { shallowEqual, useSelector } from "react-redux";
-import { AccessToken, AppState, userDetails } from "../types/type.auth";
+import { AccessToken, AppState, UserDetails } from "../types/type.auth";
+import "../styles/sidenavbar.module.css";
+import BillingSummaryCard from "./BillingSummaryCard";
 
 interface ClientDetailsCardProps {}
 
@@ -12,7 +15,7 @@ const ClientDetailsCard: FunctionComponent<ClientDetailsCardProps> = () => {
     shallowEqual
   );
 
-  const [userDetails, setuserDetails] = useState<userDetails>();
+  const [userDetails, setuserDetails] = useState<UserDetails["result"]>();
 
   useEffect(() => {
     const headers = {
@@ -27,10 +30,10 @@ const ClientDetailsCard: FunctionComponent<ClientDetailsCardProps> = () => {
       url: "https://api.business.bt.com/bt-business/v1/myaccount/user-details",
       headers,
     })
-      .then(function (response: { data: userDetails }) {
+      .then(function (response: { data: UserDetails }) {
         // handle success
         console.log(response);
-        setuserDetails(response.data);
+        setuserDetails(response.data.result);
       })
       .catch(function (error: string) {
         // handle error
@@ -42,9 +45,23 @@ const ClientDetailsCard: FunctionComponent<ClientDetailsCardProps> = () => {
   }, [accessTokenState]);
 
   return (
-    <div>
-       <p className="name__heading">Welcome {userDetails?.result.FirstName} - {userDetails?.result.LastName}</p>
-    </div>
+    <>
+      <section>
+        <Heading size="l">
+          Hi {userDetails?.FirstName}, welcome back to BT Business
+        </Heading>
+        <VerticalSpace size="12" />
+        <Text size="m">Thursday 05 May</Text>
+        <VerticalSpace size="12" />
+        <Text size="m">
+          Your latest bill for Home food cafe is now available.
+        </Text>
+      </section>
+      <VerticalSpace size="64" />
+      <section>
+        <BillingSummaryCard userDetails={userDetails} />
+      </section>
+    </>
   );
 };
 

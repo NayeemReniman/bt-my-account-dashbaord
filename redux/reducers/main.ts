@@ -11,7 +11,22 @@ const reducer = (
       contactID: "",
       isLoggedIn: false,
     },
-    userDetails: { name: "" },
+    userDetails: {
+      Title: "string",
+      FirstName: "string",
+      LastName: "string",
+      LastLoggedIn: "string",
+      Groups: [],
+      Intercepts: [],
+      MobileNumber: "string",
+      LandlineNumber: "string",
+      PrimaryEmailAddress: "string",
+      AlternativeEmailAddress: "string",
+      Order: "string",
+      Interfaces: "string",
+      ContactId: "string",
+      ConsentList: [],
+    },
   },
   action: AuthorizationAction
 ): AppState => {
