@@ -39,6 +39,76 @@ export type UserDetails = CommonResponse & {
   };
 };
 
+export type BillingSummary = CommonResponse & {
+  result: {
+    BillSummary: {
+      BillDate: string;
+      PaymentDueDate: string;
+      NextBillDate: string;
+      Status: string;
+      StatusDesc: string;
+      IsPaid: boolean;
+      BillRef: string;
+      BillType: string;
+      AccountName: string;
+      BillingNameAndAddress: string;
+      BillVersionNumber: number;
+      BillingAccountSystem: string;
+      PaymentMethod: string;
+    };
+    BillCharges: {
+      RegularCharges: number;
+      UsageCharges: number;
+      OneOffCharges: number;
+      DiscountCharges: number;
+      Adjustments: number;
+      TotalNotIncVat: number;
+      TotalVat: number;
+      TotalIncVat: number;
+    };
+    Products: any[];
+  };
+};
+
+export type Fault = {
+  ProductName: string;
+  ServiceId: string;
+  ReportedOn: string;
+  FaultReference: string;
+  Status: string;
+  isOpen: boolean;
+};
+export type FaultsDetails = CommonResponse & {
+  result: {
+    PageIndex: number;
+    TotalSize: number;
+    PageSize: number;
+    Faults: Fault[];
+  };
+};
+
+export type Order = {
+  "<OrderDate>k__BackingField": string;
+  "<OrderIdentifier>k__BackingField": string;
+  "<Description>k__BackingField": string;
+  "<OrderStatus>k__BackingField": boolean;
+  "<LongDescription>k__BackingField": string;
+  "<PlacedOnDate>k__BackingField": string;
+  "<CompletionDate>k__BackingField": string;
+  "<CompleteOrderStatus>k__BackingField": string;
+  "<Type>k__BackingField": number;
+  "<Postcode>k__BackingField": string;
+  "<ProductOrderItems>k__BackingField": string[];
+};
+export type OrdersDetails = CommonResponse & {
+  result: {
+    PageIndex: number;
+    TotalSize: number;
+    PageSize: number;
+    Orders: Order[];
+  };
+};
+
 export type BillingAccount = {
   AccountNumber: string;
   Name: string;

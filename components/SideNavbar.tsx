@@ -2,6 +2,7 @@ import {
   Align as div,
   Columns,
   Icon,
+  Image,
   Surface,
   Text,
   VerticalSpace,
@@ -57,7 +58,8 @@ const SideNavbar: FunctionComponent<SideNavbarProps> = () => {
                   : { backgroundColor: "#32008a", color: "#c1b2dc" }
               }
             >
-              <a className="sideNavbar__menuLink"
+              <a
+                className="sideNavbar__menuLink"
                 href={menuItem.href}
                 onClick={(e) => setactiveMenu(menuItem.title)}
               >
@@ -70,7 +72,7 @@ const SideNavbar: FunctionComponent<SideNavbarProps> = () => {
           ))}
         </div>
         <div className="sideNavbar__adLayer">
-          
+          <Image src="/ad-banner.png" alt="dummay-poseter" />
         </div>
       </div>
     </section>

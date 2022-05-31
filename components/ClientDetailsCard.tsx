@@ -1,9 +1,12 @@
-import { Heading, VerticalSpace, Text } from "@arc-ui/components";
+import { Heading, VerticalSpace, Text, Columns } from "@arc-ui/components";
 import { FunctionComponent, useEffect, useState } from "react";
 import { shallowEqual, useSelector } from "react-redux";
 import { AccessToken, AppState, UserDetails } from "../types/type.auth";
 import "../styles/sidenavbar.module.css";
 import BillingSummaryCard from "./BillingSummaryCard";
+import FaultsCard from "./FaultsCard";
+import OrdersCard from "./OrdersCard";
+import Recemendations from "./Recemendations";
 
 interface ClientDetailsCardProps {}
 
@@ -47,7 +50,7 @@ const ClientDetailsCard: FunctionComponent<ClientDetailsCardProps> = () => {
   return (
     <>
       <section>
-        <Heading size="l">
+        <Heading size="m">
           Hi {userDetails?.FirstName}, welcome back to BT Business
         </Heading>
         <VerticalSpace size="12" />
@@ -60,6 +63,22 @@ const ClientDetailsCard: FunctionComponent<ClientDetailsCardProps> = () => {
       <VerticalSpace size="64" />
       <section>
         <BillingSummaryCard userDetails={userDetails} />
+      </section>
+      <VerticalSpace size="64" />
+      <section>
+        <Columns>
+          <Columns.Col span={6}>
+            <FaultsCard userDetails={userDetails} />
+          </Columns.Col>
+          <Columns.Col span={6}>
+            {" "}
+            <OrdersCard userDetails={userDetails} />
+          </Columns.Col>
+        </Columns>
+      </section>
+      <VerticalSpace size="64" />
+      <section>
+        <Recemendations userDetails={userDetails} />
       </section>
     </>
   );
