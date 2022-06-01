@@ -28,6 +28,7 @@ const Recemendations: FunctionComponent<RecemendationsProps> = ({
       >
         <>
           <Heading size="m">Yearly spend</Heading>
+          <VerticalSpace size="24"/>
           <Columns>
             <Columns.Col span={6}>
               <Text size="s">Broadband</Text>

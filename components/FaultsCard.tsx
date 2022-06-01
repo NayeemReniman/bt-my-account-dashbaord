@@ -1,4 +1,11 @@
-import { Button, Columns, Heading, Text } from "@arc-ui/components";
+import {
+  Align,
+  Button,
+  Columns,
+  Heading,
+  Icon,
+  Text,
+} from "@arc-ui/components";
 import { FunctionComponent, useEffect, useState } from "react";
 import { useSelector, shallowEqual } from "react-redux";
 import {
@@ -68,10 +75,17 @@ const FaultsCard: FunctionComponent<FaultsCardProps> = ({ userDetails }) => {
       <DashbaordCard
         header={
           <>
-            <Heading size="m">
-              {faultsDetails.Faults.length} fault
-              {faultsDetails.Faults.length > 1 ? "s" : ""}
-            </Heading>
+            <div style={{ flexGrow: 2 }}>
+              <Heading size="m">
+                {faultsDetails.Faults.length} fault
+                {faultsDetails.Faults.length > 1 ? "s" : ""}
+              </Heading>
+            </div>
+            <div>
+              <Align horizontal="right">
+                <Icon icon="btSpanner" size={32}></Icon>
+              </Align>
+            </div>
           </>
         }
       >
@@ -83,10 +97,13 @@ const FaultsCard: FunctionComponent<FaultsCardProps> = ({ userDetails }) => {
           >
             <Columns>
               <Columns.Col span={6}>
-                <Text size="m">Reported on {fault.ReportedOn}</Text>
+                <Text size="s">
+                  Reported on{" "}
+                  {new Date(fault.ReportedOn).toLocaleDateString("en-GB")}
+                </Text>
               </Columns.Col>
               <Columns.Col span={6}>
-                <Text size="m">Location {fault.ServiceId}</Text>
+                <Text size="s">Location {fault.ServiceId}</Text>
               </Columns.Col>
             </Columns>
           </DashboardCardRow>

@@ -4,6 +4,7 @@ import {
   Button,
   Columns,
   Heading,
+  Icon,
   Image,
   Text,
   VerticalSpace,
@@ -123,6 +124,18 @@ const BillingSummaryCard: FunctionComponent<BillingSummaryCardProps> = ({
                   : "-"}
               </Text>
             </div>
+            <div>
+              <Columns>
+                <Columns.Col span={2}>
+                  {" "}
+                  <Icon icon="btDocumentPdf" color="brand" size={32} />
+                </Columns.Col>
+                <Columns.Col span={2}>
+                  {" "}
+                  <Icon icon="btDocumentPdf" color="brand" size={32} />
+                </Columns.Col>
+              </Columns>
+            </div>
             <div style={{ flexGrow: 2 }}>
               <Align horizontal="right">
                 <DashbaordLabel text="overdue: 1/05/2022" color="#DA020F" />
@@ -134,8 +147,22 @@ const BillingSummaryCard: FunctionComponent<BillingSummaryCardProps> = ({
         <div>
           <Columns>
             <Columns.Col span={5}>
-              <Heading size="s">Cost breakdown</Heading>
-              <Image src="/cost-breakdown.png" alt="dummay cost breakdown" />
+              <div>
+                <Heading size="s">Cost breakdown</Heading>
+                <Image src="/cost-breakdown.png" alt="dummay cost breakdown" />
+                <Columns>
+                  <Columns.Col span={6}>
+                    <Button label="Pay bill" isFullWidth></Button>
+                  </Columns.Col>
+                  <Columns.Col span={6}>
+                    <Button
+                      label="View bill"
+                      isFullWidth
+                      fill="outlined"
+                    ></Button>
+                  </Columns.Col>
+                </Columns>
+              </div>
             </Columns.Col>
             <Columns.Col span={2}>
               <Text size="m">
@@ -153,16 +180,6 @@ const BillingSummaryCard: FunctionComponent<BillingSummaryCardProps> = ({
           </Columns>
         </div>
         <VerticalSpace size="8" />
-        <div>
-          <Columns>
-            <Columns.Col span={6}>
-              <Button label="Pay bill" isFullWidth></Button>
-            </Columns.Col>
-            <Columns.Col span={6}>
-              <Button label="View bill" isFullWidth fill="outlined"></Button>
-            </Columns.Col>
-          </Columns>
-        </div>
       </DashbaordCard>
     </div>
   );

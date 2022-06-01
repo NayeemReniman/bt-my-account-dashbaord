@@ -1,4 +1,4 @@
-import { Button, Columns, Heading, Text } from "@arc-ui/components";
+import { Align, Button, Columns, Heading, Icon, Text } from "@arc-ui/components";
 import { FunctionComponent, useEffect, useState } from "react";
 import { shallowEqual, useSelector } from "react-redux";
 import {
@@ -78,11 +78,18 @@ const OrdersCard: FunctionComponent<OrdersCardProps> = ({ userDetails }) => {
       <DashbaordCard
         header={
           <>
+          <div style={{ flexGrow: 2 }}>
             <Heading size="m">
               {orderDetails.Orders.length} order
               {orderDetails.Orders.length > 1 ? "s" : ""}
             </Heading>
-          </>
+          </div>
+          <div>
+            <Align horizontal="right">
+              <Icon icon="btVan" size={32}></Icon>
+            </Align>
+          </div>
+        </>
         }
       >
         {orderDetails.Orders.map((order) => (
@@ -93,23 +100,23 @@ const OrdersCard: FunctionComponent<OrdersCardProps> = ({ userDetails }) => {
           >
             <Columns>
               <Columns.Col span={6}>
-                <Text size="m">
-                  Orderd on {order["<PlacedOnDate>k__BackingField"]}
+                <Text size="s">
+                  Orderd on {new Date(order["<PlacedOnDate>k__BackingField"]).toLocaleDateString("en-GB")}
                 </Text>
               </Columns.Col>
               <Columns.Col span={6}>
-                <Text size="m">
+                <Text size="s">
                   Expected delivery on{" "}
-                  {order["<CompletionDate>k__BackingField"]}
+                  {new Date(order["<CompletionDate>k__BackingField"]).toLocaleDateString("en-GB")}
                 </Text>
               </Columns.Col>
               <Columns.Col span={6}>
-                <Text size="m">
+                <Text size="s">
                   Delivery location {order["<Postcode>k__BackingField"]}
                 </Text>
               </Columns.Col>
               <Columns.Col span={6}>
-                <Text size="m">Cost £{order["<Type>k__BackingField"]}</Text>
+                <Text size="s">Cost £{order["<Type>k__BackingField"]}</Text>
               </Columns.Col>
             </Columns>
           </DashboardCardRow>
