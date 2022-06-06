@@ -2,21 +2,19 @@ import { Heading, Rule } from "@arc-ui/components";
 import { FunctionComponent } from "react";
 import DashbaordLabel from "./DashbaordLabel";
 
-interface DashboardCardRowProps {
+interface DashboardCardDetailedRowProps {
   title: string;
   label: string;
   children: React.ReactNode;
 }
 
-const DashboardCardRow: FunctionComponent<DashboardCardRowProps> = ({
-  title,
-  label,
-  children,
-}) => {
+const DashboardCardDetailedRow: FunctionComponent<
+  DashboardCardDetailedRowProps
+> = ({ title, label, children }) => {
   return (
     <div className="dashbaord__card__row__container">
       <div>
-        <DashbaordLabel color="#DA020F" text={label}></DashbaordLabel>
+        <DashbaordLabel color="success" text={label}></DashbaordLabel>
       </div>
       <div>
         <Heading size="s"># {title}</Heading>
@@ -27,4 +25,4 @@ const DashboardCardRow: FunctionComponent<DashboardCardRowProps> = ({
   );
 };
 
-export default DashboardCardRow;
+export default DashboardCardDetailedRow;

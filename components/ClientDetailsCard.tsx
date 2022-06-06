@@ -1,7 +1,12 @@
 import { Heading, VerticalSpace, Text, Columns } from "@arc-ui/components";
 import { FunctionComponent, useEffect, useState } from "react";
 import { shallowEqual, useSelector } from "react-redux";
-import { AccessToken, AppState, UserDetails } from "../types/type.auth";
+import {
+  AccessToken,
+  AppState,
+  UserDetails,
+  UserDetailsResponse,
+} from "../types/type.dashboard";
 import "../styles/sidenavbar.module.css";
 import BillingSummaryCard from "./BillingSummaryCard";
 import FaultsCard from "./FaultsCard";
@@ -18,7 +23,30 @@ const ClientDetailsCard: FunctionComponent<ClientDetailsCardProps> = () => {
     shallowEqual
   );
 
-  const [userDetails, setuserDetails] = useState<UserDetails["result"]>();
+  const [userDetails, setuserDetails] = useState<UserDetails>({
+    Title: "Mr",
+    FirstName: "Ryan",
+    LastName: "Mosforth",
+    LastLoggedIn: "05/05/2022 13:13:24",
+    Groups: [
+      {
+        Name: "Group 1",
+        RoleId: 1,
+        Key: "91a4bffe00b93b93",
+        CugId: "CUG5080031486",
+        ContactId: "820Z5V84MB",
+      },
+    ],
+    Intercepts: [],
+    MobileNumber: "07879119448",
+    LandlineNumber: "0123456789",
+    PrimaryEmailAddress: "ryan.mosforth@bt.com",
+    AlternativeEmailAddress: "archana.dev@bt.com",
+    Order: "",
+    Interfaces: "",
+    ContactId: "820Z5V84MB",
+    ConsentList: ["EMAIL"],
+  });
 
   useEffect(() => {
     const headers = {
@@ -33,7 +61,7 @@ const ClientDetailsCard: FunctionComponent<ClientDetailsCardProps> = () => {
       url: "https://api.business.bt.com/bt-business/v1/myaccount/user-details",
       headers,
     })
-      .then(function (response: { data: UserDetails }) {
+      .then(function (response: { data: UserDetailsResponse }) {
         // handle success
         console.log(response);
         setuserDetails(response.data.result);

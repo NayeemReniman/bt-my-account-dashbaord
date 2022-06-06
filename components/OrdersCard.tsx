@@ -1,26 +1,54 @@
-import { Align, Button, Columns, Heading, Icon, Text } from "@arc-ui/components";
+import {
+  Align,
+  Button,
+  Columns,
+  Heading,
+  Icon,
+  Text,
+  VerticalSpace,
+} from "@arc-ui/components";
 import { FunctionComponent, useEffect, useState } from "react";
 import { shallowEqual, useSelector } from "react-redux";
 import {
   AccessToken,
   AppState,
   OrdersDetails,
+  OrdersResponse,
   UserDetails,
-} from "../types/type.auth";
+} from "../types/type.dashboard";
 import DashbaordCard from "./common/DashboardCard";
-import DashboardCardRow from "./common/DashboardCardRow";
+import DashbaordCardCompactRow from "./common/DashboardCardCompactRow";
+import DashboardCardDetailedRow from "./common/DashboardCardDetailedRow";
 
 interface OrdersCardProps {
-  userDetails: UserDetails["result"];
+  userDetails: UserDetails;
 }
+
 const axios = require("axios").default;
+const orderLabels = [
+  {
+    title: "Inprogress",
+    color: "info",
+    helperText: "Order being processed",
+  },
+  {
+    title: "Delivery partially complete",
+    color: "info",
+    helperText: "Action required",
+  },
+  {
+    title: "Completed",
+    color: "info",
+    helperText: "Product setup required",
+  },
+];
 const OrdersCard: FunctionComponent<OrdersCardProps> = ({ userDetails }) => {
   const accessTokenState: AccessToken = useSelector(
     (state: AppState) => state.auth,
     shallowEqual
   );
 
-  const [orderDetails, setorderDetails] = useState<OrdersDetails["result"]>({
+  const [orderDetails, setorderDetails] = useState<OrdersDetails>({
     PageIndex: 0,
     TotalSize: 1,
     PageSize: 1,
@@ -60,7 +88,7 @@ const OrdersCard: FunctionComponent<OrdersCardProps> = ({ userDetails }) => {
       url: `https://api.ee.co.uk/bt-business-auth/v1/group-orders/${userDetails.Groups[0].Key}?pageSize=5&index=1&tabId=2`,
       headers,
     })
-      .then(function (response: { data: OrdersDetails }) {
+      .then(function (response: { data: OrdersResponse }) {
         // handle success
         console.log(response);
         setorderDetails(response.data.result);
@@ -78,49 +106,62 @@ const OrdersCard: FunctionComponent<OrdersCardProps> = ({ userDetails }) => {
       <DashbaordCard
         header={
           <>
-          <div style={{ flexGrow: 2 }}>
-            <Heading size="m">
-              {orderDetails.Orders.length} order
-              {orderDetails.Orders.length > 1 ? "s" : ""}
-            </Heading>
-          </div>
-          <div>
-            <Align horizontal="right">
-              <Icon icon="btVan" size={32}></Icon>
-            </Align>
-          </div>
-        </>
+            <div style={{ flexGrow: 2 }}>
+              <Heading size="m">
+                {orderDetails.Orders.length} order
+                {orderDetails.Orders.length > 1 ? "s" : ""}
+              </Heading>
+            </div>
+            <div>
+              <Align horizontal="right">
+                <Icon icon="btVan" size={32}></Icon>
+              </Align>
+            </div>
+          </>
         }
       >
-        {orderDetails.Orders.map((order) => (
-          <DashboardCardRow
-            key={order["<OrderIdentifier>k__BackingField"]}
-            label={order["<CompleteOrderStatus>k__BackingField"]}
-            title={`${order["<OrderIdentifier>k__BackingField"]} ${order["<Description>k__BackingField"]}`}
-          >
-            <Columns>
-              <Columns.Col span={6}>
-                <Text size="s">
-                  Orderd on {new Date(order["<PlacedOnDate>k__BackingField"]).toLocaleDateString("en-GB")}
-                </Text>
-              </Columns.Col>
-              <Columns.Col span={6}>
-                <Text size="s">
-                  Expected delivery on{" "}
-                  {new Date(order["<CompletionDate>k__BackingField"]).toLocaleDateString("en-GB")}
-                </Text>
-              </Columns.Col>
-              <Columns.Col span={6}>
-                <Text size="s">
-                  Delivery location {order["<Postcode>k__BackingField"]}
-                </Text>
-              </Columns.Col>
-              <Columns.Col span={6}>
-                <Text size="s">Cost £{order["<Type>k__BackingField"]}</Text>
-              </Columns.Col>
-            </Columns>
-          </DashboardCardRow>
-        ))}
+        {orderDetails.Orders.length < 6 ? (
+          orderDetails.Orders.map((order) => (
+            <DashboardCardDetailedRow
+              key={order["<OrderIdentifier>k__BackingField"]}
+              label={order["<CompleteOrderStatus>k__BackingField"]}
+              title={`${order["<OrderIdentifier>k__BackingField"]} ${order["<Description>k__BackingField"]}`}
+            >
+              <Columns>
+                <Columns.Col span={6}>
+                  <Text size="s">
+                    Orderd on{" "}
+                    {new Date(
+                      order["<PlacedOnDate>k__BackingField"]
+                    ).toLocaleDateString("en-GB")}
+                  </Text>
+                </Columns.Col>
+                <Columns.Col span={6}>
+                  <Text size="s">
+                    Expected delivery on{" "}
+                    {new Date(
+                      order["<CompletionDate>k__BackingField"]
+                    ).toLocaleDateString("en-GB")}
+                  </Text>
+                </Columns.Col>
+                <Columns.Col span={6}>
+                  <Text size="s">
+                    Delivery location {order["<Postcode>k__BackingField"]}
+                  </Text>
+                </Columns.Col>
+                <Columns.Col span={6}>
+                  <Text size="s">Cost £{order["<Type>k__BackingField"]}</Text>
+                </Columns.Col>
+              </Columns>
+            </DashboardCardDetailedRow>
+          ))
+        ) : (
+          <DashbaordCardCompactRow
+            data={orderDetails.Orders}
+            labelKey="<CompleteOrderStatus>k__BackingField"
+            labels={orderLabels}
+          />
+        )}
         <Button label="Manage orders" isFullWidth></Button>
       </DashbaordCard>
     </>

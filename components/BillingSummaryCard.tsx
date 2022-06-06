@@ -15,9 +15,9 @@ import {
   AccessToken,
   AppState,
   BillingAccounts,
-  BillingSummary,
+  BillingSummaryResponse,
   UserDetails,
-} from "../types/type.auth";
+} from "../types/type.dashboard";
 import DashbaordLabel from "./common/DashbaordLabel";
 import DashboardBanners from "./common/DashboardBanners";
 import DashbaordCard from "./common/DashboardCard";
@@ -25,7 +25,7 @@ import DashbaordCard from "./common/DashboardCard";
 const axios = require("axios").default;
 
 interface BillingSummaryCardProps {
-  userDetails: UserDetails["result"];
+  userDetails: UserDetails;
 }
 
 const BillingSummaryCard: FunctionComponent<BillingSummaryCardProps> = ({
@@ -38,7 +38,8 @@ const BillingSummaryCard: FunctionComponent<BillingSummaryCardProps> = ({
 
   const [billingAccounts, setbillingAccounts] = useState<BillingAccounts>();
 
-  const [billingSummary, setbillingSummary] = useState<BillingSummary>();
+  const [billingSummary, setbillingSummary] =
+    useState<BillingSummaryResponse>();
 
   useEffect(() => {
     if (userDetails == undefined) return;
@@ -83,7 +84,7 @@ const BillingSummaryCard: FunctionComponent<BillingSummaryCardProps> = ({
       url: `https://api.ee.co.uk/bt-business-auth/v1/bills/${billingAccounts.result[0].AccountNumber}/summary`,
       headers,
     })
-      .then(function (response: { data: BillingSummary }) {
+      .then(function (response: { data: BillingSummaryResponse }) {
         // handle success
         console.log(response);
         setbillingSummary(response.data);
@@ -138,7 +139,7 @@ const BillingSummaryCard: FunctionComponent<BillingSummaryCardProps> = ({
             </div>
             <div style={{ flexGrow: 2 }}>
               <Align horizontal="right">
-                <DashbaordLabel text="overdue: 1/05/2022" color="#DA020F" />
+                <DashbaordLabel text="overdue: 1/05/2022" color="danger" />
               </Align>
             </div>
           </>

@@ -6,11 +6,11 @@ import {
   VerticalSpace,
 } from "@arc-ui/components";
 import { FunctionComponent } from "react";
-import { UserDetails } from "../types/type.auth";
+import { UserDetails } from "../types/type.dashboard";
 import RecommendationsCard from "./common/RecommendationsCard";
 
 interface RecemendationsProps {
-  userDetails: UserDetails["result"];
+  userDetails: UserDetails;
 }
 
 const Recemendations: FunctionComponent<RecemendationsProps> = ({
@@ -28,7 +28,7 @@ const Recemendations: FunctionComponent<RecemendationsProps> = ({
       >
         <>
           <Heading size="m">Yearly spend</Heading>
-          <VerticalSpace size="24"/>
+          <VerticalSpace size="24" />
           <Columns>
             <Columns.Col span={6}>
               <Text size="s">Broadband</Text>

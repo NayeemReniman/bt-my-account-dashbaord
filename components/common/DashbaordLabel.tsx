@@ -1,10 +1,11 @@
 import { Text } from "@arc-ui/components";
 import { FunctionComponent } from "react";
+import ColorText, { ColorTypes, getColor } from "./ColorText";
 
 interface DashbaordLabelProps {
   text: string;
   // type: LabelTypes;
-  color: string;
+  color: ColorTypes;
 }
 export type LabelTypes =
   | "repair delayed"
@@ -20,9 +21,11 @@ const DashbaordLabel: FunctionComponent<DashbaordLabelProps> = ({
   return (
     <div
       className="label__container"
-      style={{ border: `1px solid ${color}`, color }}
+      style={{ border: `1px solid ${getColor(color)}` }}
     >
-      <Text size="xs">{text}</Text>
+      <ColorText size="xs" color={color}>
+        {text}
+      </ColorText>
     </div>
   );
 };

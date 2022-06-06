@@ -1,4 +1,4 @@
-import { AppState, AuthorizationAction } from "../../types/type.auth";
+import { AppState, AuthorizationAction } from "../../types/type.dashboard";
 import * as actionTypes from "../types";
 
 const reducer = (
