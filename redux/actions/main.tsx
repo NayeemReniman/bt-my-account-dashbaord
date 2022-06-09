@@ -2,8 +2,8 @@ import {
   AccessToken,
   AuthorizationAction,
   DispatchType,
-  UserDetails,
-} from "../../types/type.auth";
+  UserDetailsResponse,
+} from "../../types/type.dashboard";
 import * as actionTypes from "../types";
 
 export const addAcessToken = (accessToken: AccessToken) => {
@@ -15,7 +15,7 @@ export const addAcessToken = (accessToken: AccessToken) => {
   return simulateHttpRequest(action);
 };
 
-export const addUserDetails = (userDetails: UserDetails["result"]) => {
+export const addUserDetails = (userDetails: UserDetailsResponse["result"]) => {
   return {
     type: actionTypes.ADD_USER_DETAILS,
     payload: userDetails,

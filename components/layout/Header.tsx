@@ -1,7 +1,7 @@
 import { Align, Icon, SiteHeader } from "@arc-ui/components";
 import { FunctionComponent } from "react";
 import { shallowEqual, useSelector } from "react-redux";
-import { AccessToken, AppState } from "../types/type.auth";
+import { AccessToken, AppState } from "../types/type.dashboard";
 
 interface HeaderProps {}
 
