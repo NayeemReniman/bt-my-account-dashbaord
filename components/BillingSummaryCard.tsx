@@ -115,10 +115,10 @@ const BillingSummaryCard: FunctionComponent<BillingSummaryCardProps> = ({
               </Heading>
             </div>
             <div>
-              <Text size="s">Inc VAT </Text>
+              <Text size="s" isInline>Inc VAT </Text>
             </div>
             <div>
-              <Text size="s">
+              <Text size="s" isInline>
                 Account{" "}
                 {billingAccounts
                   ? billingAccounts?.result[0].AccountNumber

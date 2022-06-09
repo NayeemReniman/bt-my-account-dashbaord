@@ -15,10 +15,10 @@ function MyApp({ Component, pageProps }: AppProps) {
     <Base>
       <Header />
       <div className="app__layout__container">
-        <div>
+        <div key="sideNav">
           <SideNavbar />
         </div>
-        <div>
+        <div key="mainContent">
           <Component {...pageProps} />
         </div>
       </div>

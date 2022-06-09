@@ -72,7 +72,7 @@ const SideNavbar: FunctionComponent<SideNavbarProps> = () => {
                     : { backgroundColor: "#32008a", color: "#c1b2dc" }
                 }
               >
-                <a
+                <a key={menuItem.icon}
                   className="sideNavbar__menuLink"
                   href={menuItem.href}
                   onClick={(e) => {
@@ -82,21 +82,21 @@ const SideNavbar: FunctionComponent<SideNavbarProps> = () => {
                     );
                   }}
                 >
-                  <Text size="l">
+                  <Text size="l" key={menuItem.icon}>
                     <Icon icon={menuItem.icon} size={32} isInline></Icon>{" "}
                     {menuItem.title}
                   </Text>
                 </a>
               </div>
               {activeSubMenu === menuItem.title && (
-                <div className="sideNavbar__subMenuWrapper">
+                <div className="sideNavbar__subMenuWrapper" key={menuItem.title}>
                   {menuItem.subMenu.map((subMenu) => (
                     <div
                       className="sideNavbar__subMenuContainer"
                       key={subMenu.title}
                     >
-                      <a className="sideNavbar__menuLink" href={subMenu.href}>
-                        <Text size="m">{subMenu.title}</Text>
+                      <a className="sideNavbar__menuLink" href={subMenu.href}  key={subMenu.title}>
+                        <Text size="m"  key={subMenu.title}>{subMenu.title}</Text>
                       </a>
                     </div>
                   ))}

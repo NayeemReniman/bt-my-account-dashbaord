@@ -1,6 +1,9 @@
-import { Text } from "@arc-ui/components";
 import { FunctionComponent } from "react";
-import ColorText, { ColorTypes, getColor } from "./ColorText";
+import {
+  ColorText,
+  ColorTypes,
+  getColor,
+} from "@nayeemreniman/bt-my-account-react-components";
 
 interface DashbaordLabelProps {
   text: string;

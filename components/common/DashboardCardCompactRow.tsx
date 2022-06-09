@@ -1,6 +1,7 @@
 import { FunctionComponent } from "react";
 import { Heading, Text } from "@arc-ui/components";
-import ColorText from "./ColorText";
+import { ColorText } from "@nayeemreniman/bt-my-account-react-components";
+
 
 interface DashbaordCardCompactRowProps {
   labels: { title: string; color: string; helperText: string }[];
