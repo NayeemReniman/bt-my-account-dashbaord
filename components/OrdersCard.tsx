@@ -143,7 +143,7 @@ const OrdersCard: FunctionComponent<OrdersCardProps> = ({ userDetails }) => {
       ) : (
         <DashboardCardSummary
           data={orderDetails.Orders}
-          labelKey="Status"
+          labelKey="<CompleteOrderStatus>k__BackingField"
           summaries={orderSummaries}
         />
       )}

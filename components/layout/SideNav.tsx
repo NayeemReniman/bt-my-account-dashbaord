@@ -7,7 +7,7 @@ interface SideNavbarProps {}
 const SideNav: FunctionComponent<SideNavbarProps> = () => {
   const sideMenuItems = [
     {
-      title: "Dashbaord",
+      title: "Dashboard",
       icon: "btDashboard",
       href: "#",
       subMenu: [],
