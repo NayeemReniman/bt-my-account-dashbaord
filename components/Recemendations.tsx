@@ -5,9 +5,10 @@ import {
   Text,
   VerticalSpace,
 } from "@arc-ui/components";
+import { RecommendationsCard } from "@nayeemreniman/bt-my-account-react-components";
 import { FunctionComponent } from "react";
 import { UserDetails } from "../types/type.dashboard";
-import RecommendationsCard from "./common/RecommendationsCard";
+
 
 interface RecemendationsProps {
   userDetails: UserDetails;

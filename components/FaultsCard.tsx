@@ -1,12 +1,10 @@
 import {
-  Align,
-  Button,
-  Columns,
-  Heading,
-  Icon,
-  Text,
-  VerticalSpace,
-} from "@arc-ui/components";
+  DashboardCard,
+  DashboardCardRow,
+  DashboardCardSummary,
+  DataLabels,
+  SummaryLabels,
+} from "@nayeemreniman/bt-my-account-react-components";
 import { FunctionComponent, useEffect, useState } from "react";
 import { useSelector, shallowEqual } from "react-redux";
 import {
@@ -16,30 +14,40 @@ import {
   FaultsResponse,
   UserDetails,
 } from "../types/type.dashboard";
-import DashbaordCard from "./common/DashboardCard";
-import DashbaordCardCompactRow from "./common/DashboardCardCompactRow";
-import DashboardCardDetailedRow from "./common/DashboardCardDetailedRow";
 
 interface FaultsCardProps {
   userDetails: UserDetails;
 }
 const axios = require("axios").default;
 
-const faultLabels = [
+const faultSummaries: SummaryLabels[] = [
   {
-    title: "Repair reported",
-    color: "info",
+    mainText: "Repair reported",
+    textColor: "warn",
     helperText: "We are assessing the repair required",
   },
   {
-    title: "Repair in progress",
-    color: "info",
+    mainText: "Repair in progress",
+    textColor: "info",
     helperText: "We are working on these now!",
   },
   {
-    title: "Fault resolved",
-    color: "info",
+    mainText: "Fault resolved",
+    textColor: "success",
     helperText: "In the last 24 hours",
+  },
+];
+
+const faultLabels: DataLabels[] = [
+  {
+    key: "ReportedOn",
+    label: "Reported on",
+    formatter: (value) => new Date(value).toLocaleDateString("en-GB"),
+  },
+  {
+    key: "ServiceId",
+    label: "Location",
+    formatter: (value) => value,
   },
 ];
 const FaultsCard: FunctionComponent<FaultsCardProps> = ({ userDetails }) => {
@@ -63,18 +71,6 @@ const FaultsCard: FunctionComponent<FaultsCardProps> = ({ userDetails }) => {
     PageSize: 1,
     TotalSize: 1,
   });
-
-  // const handleFaults = (data: FaultsDetails, tabId: number) => {
-  //   setfaultsDetails({
-  //     ...faultsDetails,
-  //     ...{
-  //       ...data,
-  //       ...{
-  //         Faults: data.Faults.filter((fault) => tabId === 2 && fault.isOpen),
-  //       },
-  //     },
-  //   });
-  // };
 
   const getFaults = (ud: UserDetails, at: AccessToken, tabId: number) => {
     const headers = {
@@ -107,55 +103,35 @@ const FaultsCard: FunctionComponent<FaultsCardProps> = ({ userDetails }) => {
     // getFaults(userDetails, accessTokenState, 1);
     getFaults(userDetails, accessTokenState, 2);
   }, [userDetails, accessTokenState]);
+
   return (
-    <>
-      <DashbaordCard
-        header={
-          <>
-            <div style={{ flexGrow: 2 }}>
-              <Heading size="m">
-                {faultsDetails.Faults.length} fault
-                {faultsDetails.Faults.length > 1 ? "s" : ""}
-              </Heading>
-            </div>
-            <div>
-              <Align horizontal="right">
-                <Icon icon="btSpanner" size={32}></Icon>
-              </Align>
-            </div>
-          </>
-        }
-      >
-        {faultsDetails.Faults.length < 4 ? (
-          faultsDetails.Faults.map((fault) => (
-            <DashboardCardDetailedRow
-              key={fault.ServiceId}
-              label={fault.Status}
-              title={`${fault.FaultReference} ${fault.ProductName}`}
-            >
-              <Columns>
-                <Columns.Col span={6}>
-                  <Text size="s">
-                    Reported on{" "}
-                    {new Date(fault.ReportedOn).toLocaleDateString("en-GB")}
-                  </Text>
-                </Columns.Col>
-                <Columns.Col span={6}>
-                  <Text size="s">Location {fault.ServiceId}</Text>
-                </Columns.Col>
-              </Columns>
-            </DashboardCardDetailedRow>
-          ))
-        ) : (
-          <DashbaordCardCompactRow
-            data={faultsDetails.Faults}
-            labelKey="Status"
-            labels={faultLabels}
+    <DashboardCard
+      buttonAction={() => console.log("Iam clicked from manage Faults")}
+      buttonText="Manage faults"
+      headerText={`${faultsDetails.Faults.length} fault ${
+        faultsDetails.Faults.length > 1 ? "s" : ""
+      }`}
+      icon="btSpanner"
+    >
+      {faultsDetails.Faults.length < 4 ? (
+        faultsDetails.Faults.map((fault) => (
+          <DashboardCardRow
+            data={fault}
+            status={fault.Status}
+            dataLabels={faultLabels}
+            statusColor="info"
+            title={`${fault.FaultReference} ${fault.ProductName}`}
+            key={fault.FaultReference}
           />
-        )}
-        <Button label="Manage faults" isFullWidth></Button>
-      </DashbaordCard>
-    </>
+        ))
+      ) : (
+        <DashboardCardSummary
+          data={faultsDetails.Faults}
+          labelKey="Status"
+          summaries={faultSummaries}
+        />
+      )}
+    </DashboardCard>
   );
 };
 

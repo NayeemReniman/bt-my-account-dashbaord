@@ -9,6 +9,11 @@ import {
   Text,
   VerticalSpace,
 } from "@arc-ui/components";
+import {
+  DashboardBanner,
+  DashboardPanel,
+  StatusLabel,
+} from "@nayeemreniman/bt-my-account-react-components";
 import { FunctionComponent, useEffect, useState } from "react";
 import { shallowEqual, useSelector } from "react-redux";
 import {
@@ -18,9 +23,6 @@ import {
   BillingSummaryResponse,
   UserDetails,
 } from "../types/type.dashboard";
-import DashbaordLabel from "./common/DashbaordLabel";
-import DashboardBanners from "./common/DashboardBanners";
-import DashbaordCard from "./common/DashboardCard";
 
 const axios = require("axios").default;
 
@@ -100,7 +102,7 @@ const BillingSummaryCard: FunctionComponent<BillingSummaryCardProps> = ({
 
   return (
     <div className="billing__summary__main__container">
-      <DashbaordCard
+      <DashboardPanel
         header={
           <>
             <div>
@@ -115,7 +117,9 @@ const BillingSummaryCard: FunctionComponent<BillingSummaryCardProps> = ({
               </Heading>
             </div>
             <div>
-              <Text size="s" isInline>Inc VAT </Text>
+              <Text size="s" isInline>
+                Inc VAT{" "}
+              </Text>
             </div>
             <div>
               <Text size="s" isInline>
@@ -139,7 +143,7 @@ const BillingSummaryCard: FunctionComponent<BillingSummaryCardProps> = ({
             </div>
             <div style={{ flexGrow: 2 }}>
               <Align horizontal="right">
-                <DashbaordLabel text="overdue: 1/05/2022" color="danger" />
+                <StatusLabel text="overdue: 1/05/2022" color="danger" />
               </Align>
             </div>
           </>
@@ -171,7 +175,7 @@ const BillingSummaryCard: FunctionComponent<BillingSummaryCardProps> = ({
               </Text>
             </Columns.Col>
             <Columns.Col span={5}>
-              <DashboardBanners
+              <DashboardBanner
                 body="For piece of mind  don’t be overdue again."
                 href="#"
                 title="Switch to payments by Direct Debit for all your biling accounts."
@@ -181,7 +185,7 @@ const BillingSummaryCard: FunctionComponent<BillingSummaryCardProps> = ({
           </Columns>
         </div>
         <VerticalSpace size="8" />
-      </DashbaordCard>
+      </DashboardPanel>
     </div>
   );
 };

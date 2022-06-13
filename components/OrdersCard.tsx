@@ -1,12 +1,10 @@
 import {
-  Align,
-  Button,
-  Columns,
-  Heading,
-  Icon,
-  Text,
-  VerticalSpace,
-} from "@arc-ui/components";
+  DashboardCard,
+  DashboardCardRow,
+  DashboardCardSummary,
+  DataLabels,
+  SummaryLabels,
+} from "@nayeemreniman/bt-my-account-react-components";
 import { FunctionComponent, useEffect, useState } from "react";
 import { shallowEqual, useSelector } from "react-redux";
 import {
@@ -16,29 +14,50 @@ import {
   OrdersResponse,
   UserDetails,
 } from "../types/type.dashboard";
-import DashbaordCard from "./common/DashboardCard";
-import DashbaordCardCompactRow from "./common/DashboardCardCompactRow";
-import DashboardCardDetailedRow from "./common/DashboardCardDetailedRow";
 
 interface OrdersCardProps {
   userDetails: UserDetails;
 }
 
 const axios = require("axios").default;
-const orderLabels = [
+
+const orderDataLabels: DataLabels[] = [
   {
-    title: "Inprogress",
-    color: "info",
+    key: "<PlacedOnDate>k__BackingField",
+    label: "Orderd on",
+    formatter: (value: string) => new Date(value).toLocaleDateString("en-GB"),
+  },
+  {
+    key: "<CompletionDate>k__BackingField",
+    label: "Expected delivery on",
+    formatter: (value: string) => new Date(value).toLocaleDateString("en-GB"),
+  },
+  {
+    key: "<Postcode>k__BackingField",
+    label: "Delivery location",
+    formatter: (value: string) => value,
+  },
+  {
+    key: "<Type>k__BackingField",
+    label: "Cost £",
+    formatter: (value: string) => value,
+  },
+];
+
+const orderSummaries: SummaryLabels[] = [
+  {
+    mainText: "Inprogress",
+    textColor: "warn",
     helperText: "Order being processed",
   },
   {
-    title: "Delivery partially complete",
-    color: "info",
+    mainText: "Delivery partially complete",
+    textColor: "info",
     helperText: "Action required",
   },
   {
-    title: "Completed",
-    color: "info",
+    mainText: "Completed",
+    textColor: "success",
     helperText: "Product setup required",
   },
 ];
@@ -102,69 +121,33 @@ const OrdersCard: FunctionComponent<OrdersCardProps> = ({ userDetails }) => {
       });
   }, [userDetails, accessTokenState]);
   return (
-    <>
-      <DashbaordCard
-        header={
-          <>
-            <div style={{ flexGrow: 2 }}>
-              <Heading size="m">
-                {orderDetails.Orders.length} order
-                {orderDetails.Orders.length > 1 ? "s" : ""}
-              </Heading>
-            </div>
-            <div>
-              <Align horizontal="right">
-                <Icon icon="btVan" size={32}></Icon>
-              </Align>
-            </div>
-          </>
-        }
-      >
-        {orderDetails.Orders.length < 6 ? (
-          orderDetails.Orders.map((order) => (
-            <DashboardCardDetailedRow
-              key={order["<OrderIdentifier>k__BackingField"]}
-              label={order["<CompleteOrderStatus>k__BackingField"]}
-              title={`${order["<OrderIdentifier>k__BackingField"]} ${order["<Description>k__BackingField"]}`}
-            >
-              <Columns>
-                <Columns.Col span={6}>
-                  <Text size="s">
-                    Orderd on{" "}
-                    {new Date(
-                      order["<PlacedOnDate>k__BackingField"]
-                    ).toLocaleDateString("en-GB")}
-                  </Text>
-                </Columns.Col>
-                <Columns.Col span={6}>
-                  <Text size="s">
-                    Expected delivery on{" "}
-                    {new Date(
-                      order["<CompletionDate>k__BackingField"]
-                    ).toLocaleDateString("en-GB")}
-                  </Text>
-                </Columns.Col>
-                <Columns.Col span={6}>
-                  <Text size="s">
-                    Delivery location {order["<Postcode>k__BackingField"]}
-                  </Text>
-                </Columns.Col>
-                <Columns.Col span={6}>
-                  <Text size="s">Cost £{order["<Type>k__BackingField"]}</Text>
-                </Columns.Col>
-              </Columns>
-            </DashboardCardDetailedRow>
-          ))
-        ) : (
-          <DashbaordCardCompactRow
-            data={orderDetails.Orders}
-            labelKey="<CompleteOrderStatus>k__BackingField"
-            labels={orderLabels}
+    <DashboardCard
+      buttonAction={() => console.log("Iam clicked from manage Orders")}
+      buttonText="Manage orders"
+      headerText={`${orderDetails.Orders.length} order ${
+        orderDetails.Orders.length > 1 ? "s" : ""
+      }`}
+      icon="btVan"
+    >
+      {orderDetails.Orders.length < 4 ? (
+        orderDetails.Orders.map((order) => (
+          <DashboardCardRow
+            data={order}
+            status={order["<CompleteOrderStatus>k__BackingField"]}
+            dataLabels={orderDataLabels}
+            statusColor="info"
+            title={`${order["<OrderIdentifier>k__BackingField"]} ${order["<Description>k__BackingField"]}`}
+            key={order["<OrderIdentifier>k__BackingField"]}
           />
-        )}
-        <Button label="Manage orders" isFullWidth></Button>
-      </DashbaordCard>
-    </>
+        ))
+      ) : (
+        <DashboardCardSummary
+          data={orderDetails.Orders}
+          labelKey="Status"
+          summaries={orderSummaries}
+        />
+      )}
+    </DashboardCard>
   );
 };
 
