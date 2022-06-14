@@ -1,4 +1,4 @@
-export type AccessToken = {
+export type AccessTokenState = {
   accessToken: string;
   deviceID: string;
   masterContactID: string;
@@ -127,15 +127,3 @@ export type BillingAccount = {
 export type BillingAccounts = CommonResponse & {
   result: BillingAccount[];
 };
-
-export type AppState = {
-  auth: AccessToken;
-  userDetails: UserDetailsResponse["result"];
-};
-
-export type AuthorizationAction = {
-  type: string;
-  payload: AccessToken;
-};
-
-export type DispatchType = (args: AuthorizationAction) => AuthorizationAction;

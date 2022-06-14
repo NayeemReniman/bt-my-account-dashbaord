@@ -7,16 +7,13 @@ import {
 } from "@arc-ui/components";
 import { RecommendationsCard } from "@nayeemreniman/bt-my-account-react-components";
 import { FunctionComponent } from "react";
+import { useAppSelector } from "../hooks";
 import { UserDetails } from "../types/type.dashboard";
 
+interface RecemendationsProps {}
 
-interface RecemendationsProps {
-  userDetails: UserDetails;
-}
-
-const Recemendations: FunctionComponent<RecemendationsProps> = ({
-  userDetails = { FirstName: "" },
-}) => {
+const Recemendations: FunctionComponent<RecemendationsProps> = () => {
+  const userDetails: UserDetails = useAppSelector((state) => state.userDetails);
   return (
     <>
       <RecommendationsCard

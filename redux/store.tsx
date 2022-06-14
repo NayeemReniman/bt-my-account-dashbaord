@@ -1,11 +1,13 @@
-import { createStore, applyMiddleware, compose } from "redux";
-import thunk from "redux-thunk";
-import { createWrapper } from "next-redux-wrapper";
-import main from "./reducers/main";
+import { configureStore } from "@reduxjs/toolkit";
+import accessTokenSlice from "./accessTokenSlice";
+import userDetailsSlice from "./userDetailsSlice";
 
-const middleware = [thunk];
+export const store = configureStore({
+  reducer: {
+    accessToken: accessTokenSlice,
+    userDetails: userDetailsSlice,
+  },
+});
 
-const makeStore = () =>
-  createStore(main, compose(applyMiddleware(...middleware)));
-
-export const wrapper = createWrapper(makeStore);
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

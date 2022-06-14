@@ -6,18 +6,15 @@ import {
   SummaryLabels,
 } from "@nayeemreniman/bt-my-account-react-components";
 import { FunctionComponent, useEffect, useState } from "react";
-import { shallowEqual, useSelector } from "react-redux";
+import { useAppSelector } from "../hooks";
 import {
-  AccessToken,
-  AppState,
+  AccessTokenState,
   OrdersDetails,
   OrdersResponse,
   UserDetails,
 } from "../types/type.dashboard";
 
-interface OrdersCardProps {
-  userDetails: UserDetails;
-}
+interface OrdersCardProps {}
 
 const axios = require("axios").default;
 
@@ -61,11 +58,11 @@ const orderSummaries: SummaryLabels[] = [
     helperText: "Product setup required",
   },
 ];
-const OrdersCard: FunctionComponent<OrdersCardProps> = ({ userDetails }) => {
-  const accessTokenState: AccessToken = useSelector(
-    (state: AppState) => state.auth,
-    shallowEqual
+const OrdersCard: FunctionComponent<OrdersCardProps> = () => {
+  const accessTokenState: AccessTokenState = useAppSelector(
+    (state) => state.accessToken
   );
+  const userDetails: UserDetails = useAppSelector((state) => state.userDetails);
 
   const [orderDetails, setorderDetails] = useState<OrdersDetails>({
     PageIndex: 0,

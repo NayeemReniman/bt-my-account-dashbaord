@@ -6,23 +6,25 @@ import {
   FormControl,
   Columns,
 } from "@arc-ui/components";
-import React from "react";
+import React, { useCallback } from "react";
 import { Dispatch, FormEvent, FunctionComponent, useState } from "react";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { addAcessToken } from "../../redux/actions/main";
-import { AccessToken, AppState } from "../../types/type.dashboard";
+import { shallowEqual } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { addAccessToken } from "../../redux/accessTokenSlice";
+
+import { AccessTokenState } from "../../types/type.dashboard";
 
 interface FakeAuthorizationProps {}
 
 const FakeAuthorization: FunctionComponent<FakeAuthorizationProps> = () => {
-  const accessTokenInitialState: AccessToken = useSelector(
-    (state: AppState) => state.auth,
+  const accessTokenInitialState: AccessTokenState = useAppSelector(
+    (state) => state.accessToken,
     shallowEqual
   );
-  const dispatch: Dispatch<any> = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const saveAcessToken = React.useCallback(
-    (accessToken: AccessToken) => dispatch(addAcessToken(accessToken)),
+  const saveAcessToken = useCallback(
+    (accessToken: AccessTokenState) => dispatch(addAccessToken(accessToken)),
     [dispatch]
   );
 
@@ -54,7 +56,7 @@ const FakeAuthorization: FunctionComponent<FakeAuthorizationProps> = () => {
       masterContactID,
       userID,
       contactID,
-      isLoggedIn,
+      isLoggedIn: true,
     });
   };
 

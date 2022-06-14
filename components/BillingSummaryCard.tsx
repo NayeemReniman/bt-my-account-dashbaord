@@ -1,6 +1,5 @@
 import {
   Align,
-  Align as div,
   Button,
   Columns,
   Heading,
@@ -15,10 +14,9 @@ import {
   StatusLabel,
 } from "@nayeemreniman/bt-my-account-react-components";
 import { FunctionComponent, useEffect, useState } from "react";
-import { shallowEqual, useSelector } from "react-redux";
+import { useAppSelector } from "../hooks";
 import {
-  AccessToken,
-  AppState,
+  AccessTokenState,
   BillingAccounts,
   BillingSummaryResponse,
   UserDetails,
@@ -26,17 +24,14 @@ import {
 
 const axios = require("axios").default;
 
-interface BillingSummaryCardProps {
-  userDetails: UserDetails;
-}
+interface BillingSummaryCardProps {}
 
-const BillingSummaryCard: FunctionComponent<BillingSummaryCardProps> = ({
-  userDetails,
-}) => {
-  const accessTokenState: AccessToken = useSelector(
-    (state: AppState) => state.auth,
-    shallowEqual
+const BillingSummaryCard: FunctionComponent<BillingSummaryCardProps> = () => {
+  const accessTokenState: AccessTokenState = useAppSelector(
+    (state) => state.accessToken
   );
+
+  const userDetails: UserDetails = useAppSelector((state) => state.userDetails);
 
   const [billingAccounts, setbillingAccounts] = useState<BillingAccounts>();
 

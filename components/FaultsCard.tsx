@@ -6,18 +6,15 @@ import {
   SummaryLabels,
 } from "@nayeemreniman/bt-my-account-react-components";
 import { FunctionComponent, useEffect, useState } from "react";
-import { useSelector, shallowEqual } from "react-redux";
+import { useAppSelector } from "../hooks";
 import {
-  AccessToken,
-  AppState,
+  AccessTokenState,
   FaultsDetails,
   FaultsResponse,
   UserDetails,
 } from "../types/type.dashboard";
 
-interface FaultsCardProps {
-  userDetails: UserDetails;
-}
+interface FaultsCardProps {}
 const axios = require("axios").default;
 
 const faultSummaries: SummaryLabels[] = [
@@ -50,12 +47,11 @@ const faultLabels: DataLabels[] = [
     formatter: (value) => value,
   },
 ];
-const FaultsCard: FunctionComponent<FaultsCardProps> = ({ userDetails }) => {
-  const accessTokenState: AccessToken = useSelector(
-    (state: AppState) => state.auth,
-    shallowEqual
+const FaultsCard: FunctionComponent<FaultsCardProps> = () => {
+  const accessTokenState: AccessTokenState = useAppSelector(
+    (state) => state.accessToken
   );
-
+  const userDetails: UserDetails = useAppSelector((state) => state.userDetails);
   const [faultsDetails, setfaultsDetails] = useState<FaultsDetails>({
     Faults: [
       {
@@ -72,7 +68,7 @@ const FaultsCard: FunctionComponent<FaultsCardProps> = ({ userDetails }) => {
     TotalSize: 1,
   });
 
-  const getFaults = (ud: UserDetails, at: AccessToken, tabId: number) => {
+  const getFaults = (ud: UserDetails, at: AccessTokenState, tabId: number) => {
     const headers = {
       "APIGW-Client-Id": "10cbbbb7-eb4d-42c8-a61d-b79e19ba3e07",
       "APIGW-Tracking-Header": "45e13a30-bec9-472d-b999-b23e45199bb4",
