@@ -3,6 +3,7 @@ import React, { FunctionComponent } from "react";
 import BillingSummaryCard from "../BillingSummaryCard";
 import ClientDetailsCard from "../ClientDetailsCard";
 import FaultsCard from "../FaultsCard";
+import ManageServicesAndApps from "../manageServicesAndApps/ManageServicesAndApps";
 import OrdersCard from "../OrdersCard";
 import Recemendations from "../Recemendations";
 import FakeAuthorization from "../temp/FakeAuthorization";
@@ -29,6 +30,8 @@ const Layout: FunctionComponent<LayoutProps> = () => {
           </Columns.Col>
         </Columns>
       </section>
+      <VerticalSpace size="64" />
+      <ManageServicesAndApps />
       <VerticalSpace size="64" />
       <section>
         <Recemendations />
