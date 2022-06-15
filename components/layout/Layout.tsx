@@ -14,7 +14,7 @@ const Layout: FunctionComponent<LayoutProps> = () => {
   return (
     <>
       <ClientDetailsCard />
-      <VerticalSpace size="64" />
+      <VerticalSpace size="12" />
       <section>
         <BillingSummaryCard />
       </section>

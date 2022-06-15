@@ -97,6 +97,11 @@ const BillingSummaryCard: FunctionComponent<BillingSummaryCardProps> = () => {
 
   return (
     <div className="billing__summary__main__container">
+      <Text size="m">
+        Your latest bill for {billingSummary?.result.BillSummary.AccountName} is
+        now available.
+      </Text>
+      <VerticalSpace size="64" />
       <DashboardPanel
         header={
           <>
