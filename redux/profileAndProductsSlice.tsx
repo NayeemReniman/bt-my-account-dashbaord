@@ -1,13 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AccessTokenState } from "../types/type.dashboard";
 import {
   fetchProfileDetails,
   ProfileDetails,
   ProductInventory,
   fetchProductInventory,
+  DATA_FETCH_STATUS,
 } from "../api";
 import { servicesConfig } from "../components/manageServicesAndApps/manageServices";
 import { appsConfig } from "../components/manageServicesAndApps/manageApps";
+import { AccessTokenState } from "./accessTokenSlice";
 
 export interface Service {
   [serviceCode: string]: {
@@ -24,12 +25,16 @@ export interface ProfileAndProductsState {
   productInventory: ProductInventory;
   manageServices: Service;
   manageApps?: Service;
+  servicesSetStatus: DATA_FETCH_STATUS;
+  appsSetStatus: DATA_FETCH_STATUS;
 }
 
 const initialState: ProfileAndProductsState = {
+  servicesSetStatus: "LOADING",
+  appsSetStatus: "LOADING",
   profile: {
     queryOnlineClientProfileDetailsResponse: {
-      identifierValue: "ryan.mosforth@btconnect.com",
+      identifierValue: "",
       listOfClientServiceInstance: {
         clientServiceInstance: [],
       },
@@ -66,7 +71,12 @@ const slice = createSlice({
           appsConfig[serviceCode] != undefined &&
             extractAndSet(appsConfig, manageApps, serviceCode);
         });
-      return { ...state, ...{ manageServices }, ...{ manageApps } };
+      return {
+        ...state,
+        ...{ manageServices },
+        ...{ manageApps },
+        ...{ appsSetStatus: "RESOLVED", servicesSetStatus: "RESOLVED" },
+      };
     },
     addServicesandAppsFromProductInventory(
       state,
@@ -94,7 +104,12 @@ const slice = createSlice({
         appsConfig[serviceCode] != undefined &&
           extractAndSet(appsConfig, manageApps, serviceCode);
       }
-      return { ...state, ...{ manageServices }, ...{ manageApps } };
+      return {
+        ...state,
+        ...{ manageServices },
+        ...{ manageApps },
+        ...{ appsSetStatus: "RESOLVED", servicesSetStatus: "RESOLVED" },
+      };
     },
   },
 });

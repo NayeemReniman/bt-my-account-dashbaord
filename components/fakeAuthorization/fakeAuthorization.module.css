@@ -1,0 +1,16 @@
+.fake__authorization__container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.fake__authorization__form__container {
+  margin: auto;
+}
+
+.form__container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}

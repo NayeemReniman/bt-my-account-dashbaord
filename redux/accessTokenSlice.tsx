@@ -1,6 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { useAppDispatch } from "../hooks";
-import { AccessTokenState } from "../types/type.dashboard";
+
+export type AccessTokenState = {
+  accessToken: string;
+  deviceID: string;
+  masterContactID: string;
+  userID: string;
+  contactID: string;
+  isLoggedIn: boolean;
+};
 
 const initialState: AccessTokenState = {
   accessToken: "",
@@ -22,5 +29,12 @@ const slice = createSlice({
 });
 
 export const { addAccessToken } = slice.actions;
+
+export const handleLogin =
+  (accessToken: AccessTokenState) =>
+  (dispatch: (arg0: { payload: AccessTokenState; type: string }) => void) => {
+    dispatch(addAccessToken(accessToken));
+    // localStorage.setItem(ACCESS_TOKEN, JSON.stringify(accessToken));
+  };
 
 export default slice.reducer;

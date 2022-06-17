@@ -1,29 +1,45 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AccessTokenState, UserDetails } from "../types/type.dashboard";
-import { fetchUserDetails } from "../api";
-const initialState: UserDetails = {
-  Title: "Mr",
-  FirstName: "Jhon",
-  LastName: "Doe",
-  LastLoggedIn: "05/05/2022 13:13:24",
-  Groups: [
-    {
-      Name: "Group 1",
-      RoleId: 1,
-      Key: "91a4bffe00b93b93",
-      CugId: "CUG5080031486",
-      ContactId: "820Z5V84MB",
-    },
-  ],
-  Intercepts: [],
-  MobileNumber: "07879119448",
-  LandlineNumber: "0123456789",
-  PrimaryEmailAddress: "ryan.mosforth@bt.com",
-  AlternativeEmailAddress: "archana.dev@bt.com",
-  Order: "",
-  Interfaces: "",
-  ContactId: "820Z5V84MB",
-  ConsentList: ["EMAIL"],
+
+import {
+  DATA_FETCH_STATUS,
+  fetchUserDetails,
+  UserDetails,
+  UserGroup,
+} from "../api";
+import { AccessTokenState } from "./accessTokenSlice";
+
+export interface UserDetailsState {
+  userDetailsFetchStatus: DATA_FETCH_STATUS;
+  activeUserGroupSetStatus: DATA_FETCH_STATUS;
+  activeUserGroup: UserGroup;
+  userDetails: UserDetails;
+}
+const initialState: UserDetailsState = {
+  userDetailsFetchStatus: "LOADING",
+  activeUserGroupSetStatus: "LOADING",
+  activeUserGroup: {
+    Name: "",
+    RoleId: 1,
+    Key: "",
+    CugId: "",
+    ContactId: "",
+  },
+  userDetails: {
+    Title: "",
+    FirstName: "",
+    LastName: "",
+    LastLoggedIn: "",
+    Groups: [],
+    Intercepts: [],
+    MobileNumber: "",
+    LandlineNumber: "",
+    PrimaryEmailAddress: "",
+    AlternativeEmailAddress: "",
+    Order: "",
+    Interfaces: "",
+    ContactId: "",
+    ConsentList: [],
+  },
 };
 
 const slice = createSlice({
@@ -31,12 +47,24 @@ const slice = createSlice({
   initialState,
   reducers: {
     addUserDetails(state, { payload }: PayloadAction<UserDetails>) {
-      return { ...state, ...payload };
+      return {
+        ...state,
+        ...{ userDetails: payload },
+        ...{ userDetailsFetchStatus: "RESOLVED" },
+      };
+    },
+    setActiveUserGroup(state, { payload }: PayloadAction<UserGroup>) {
+      console.log(payload);
+      return {
+        ...state,
+        ...{ activeUserGroup: payload },
+        ...{ activeUserGroupSetStatus: "RESOLVED" },
+      };
     },
   },
 });
 
-export const { addUserDetails } = slice.actions;
+export const { addUserDetails, setActiveUserGroup } = slice.actions;
 
 export const getUserDetails =
   (accessToken: AccessTokenState) =>
