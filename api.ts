@@ -201,6 +201,27 @@ export type OrdersResponse = CommonResponse & {
   result: OrdersDetails;
 };
 
+export type Notification = {
+  NotificationId: number;
+  NotificationCategory: string;
+  NotificationSubject: string;
+  NotificationBody: string;
+  NotificationDate: string;
+  NotificationMedium: number;
+  DisplayNotificationMedium: string;
+  NotificationStatus: number;
+  IsDeletable: boolean;
+  NotificationLetterUri: string;
+  NotificationKciMessageId: string;
+  EnquiryReferenceNumber: number;
+  NotificationKciProductCode: string;
+  NotificationTemplateName: string;
+};
+
+export type NotificationsResponse = CommonResponse & {
+  result: Notification[];
+};
+
 const fetchUsingAxios = async (
   accessTokenState: AccessTokenState,
   url: string,
@@ -296,4 +317,15 @@ export const fetchOrders = async (
     accessTokenState,
     `https://api.ee.co.uk/bt-business-auth/v1/group-orders/${groupKey}?pageSize=5&index=1&tabId=${tabId}`
   )) as OrdersResponse;
+};
+
+export const fetchNotifications = async (
+  accessTokenState: AccessTokenState,
+  groupKey: string
+): Promise<NotificationsResponse> => {
+  return (await fetchUsingAxios(
+    accessTokenState,
+    `https://api.ee.co.uk/bt-business-auth/v1/notifications`,
+    { _authKey: groupKey }
+  )) as NotificationsResponse;
 };

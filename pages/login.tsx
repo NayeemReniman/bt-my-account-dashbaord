@@ -2,7 +2,6 @@ import { Heading, SiteHeader } from "@arc-ui/components";
 import { AppFooter } from "@nayeemreniman/bt-my-account-react-components";
 import Head from "next/head";
 import { FunctionComponent } from "react";
-import FakeAuthorization from "../components/fakeAuthorization/FakeAuthorization";
 import Login from "../components/login/Login";
 import { useAppSelector } from "../hooks";
 

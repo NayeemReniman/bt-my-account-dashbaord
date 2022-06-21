@@ -1,3 +1,13 @@
 .app__template__main__container {
   align-items: unset !important;
 }
+
+.client__details__and__notifications__container {
+  display: flex;
+  flex-direction: row;
+}
+
+.client__details__container {
+  flex-grow: 2;
+  width: 100%;
+}

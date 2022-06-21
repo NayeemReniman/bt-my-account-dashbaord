@@ -1,10 +1,9 @@
 import {
-  AppFooter,
-  AppHeader,
   AppTemplate,
+  NotificationDrawer,
 } from "@nayeemreniman/bt-my-account-react-components";
-import { Columns, VerticalSpace } from "@arc-ui/components";
-import React, { FunctionComponent } from "react";
+import { Align, Button, Columns, VerticalSpace } from "@arc-ui/components";
+import React, { FunctionComponent, useState } from "react";
 import ClientDetailsCard from "../components/clientDetailsCard/ClientDetailsCard";
 import BillingSummaryCard from "../components/billingSummaryCard/BillingSummaryCard";
 import FaultsCard from "../components/faultsCard/FaultsCard";
@@ -14,11 +13,13 @@ import Recemendations from "../components/recemendations/Recemendations";
 import { useAppSelector } from "../hooks";
 import Head from "next/head";
 import FakeAuthorization from "../components/fakeAuthorization/FakeAuthorization";
-import AppLoader from "../components/common/appLoader/AppLoader";
 import SideBarRecemendations from "../components/sideBarRecemendations/SideBarRecemendations";
+import DashboardNotifications from "../components/common/DashboardNotfications/DashboardNotfications";
+import Modal from "../components/common/modal/Modal";
 
 export default function Home() {
   const { isLoggedIn } = useAppSelector((state) => state.accessToken);
+  const [showModal, setShowModal] = useState(false);
   return (
     <>
       <Head>
@@ -30,7 +31,24 @@ export default function Home() {
           sideNonNavContainer={<SideBarRecemendations />}
         >
           <section>
-            <ClientDetailsCard />
+            <div className="client__details__and__notifications__container">
+              <div className="client__details__container">
+                <ClientDetailsCard />
+              </div>
+              <div className="button__container">
+                <Align horizontal="right" vertical="center">
+                  <Button
+                    label="Recent notifications"
+                    icon="btNotification"
+                    fill="solid"
+                    onClick={() => setShowModal(true)}
+                  />
+                </Align>
+                <Modal onClose={() => setShowModal(false)} show={showModal}>
+                  <NotificationDrawer insights={[]} notifications={[]} />
+                </Modal>
+              </div>
+            </div>
           </section>
           <VerticalSpace size="12" />
           <section>
@@ -55,6 +73,8 @@ export default function Home() {
           <section>
             <Recemendations />
           </section>
+          <VerticalSpace size="64" />
+          <div id="modal-root"></div>
         </AppTemplate>
       ) : (
         <FakeAuthorization />

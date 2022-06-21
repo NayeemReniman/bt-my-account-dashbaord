@@ -6,6 +6,7 @@ import billingAccountsSlice from "./billingAccountsSlice";
 import billingSummarySlice from "./billingSummarySlice";
 import faultsSlice from "./faultsSlice";
 import ordersSlice from "./ordersSlice";
+import notificationsSlice from "./notificationsSlice";
 export const store = configureStore({
   reducer: {
     accessToken: accessTokenSlice,
@@ -15,6 +16,7 @@ export const store = configureStore({
     billingSummary: billingSummarySlice,
     faults: faultsSlice,
     orders: ordersSlice,
+    notifications: notificationsSlice,
   },
 });
 
